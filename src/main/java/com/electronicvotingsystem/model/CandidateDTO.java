@@ -10,7 +10,9 @@ public class CandidateDTO extends UserDTO {
 	@NotNull
 	private PartyDTO partyDTO;
 
+	@NotNull
 	private int age;
+	
 
 	@NotNull
 	private String constituency;
@@ -21,7 +23,7 @@ public class CandidateDTO extends UserDTO {
 		super();
 	}
 
-	public CandidateDTO(@NotNull PartyDTO partyDTO, int age, @NotNull String constituency, long votecount) {
+	public CandidateDTO(@NotNull PartyDTO partyDTO, @NotNull int age, @NotNull String constituency, long votecount) {
 		super();
 		this.partyDTO = partyDTO;
 		this.age = age;
@@ -29,21 +31,11 @@ public class CandidateDTO extends UserDTO {
 		this.votecount = votecount;
 	}
 
-
-
-	public long getVotecount() {
-		return votecount;
-	}
-
-	public void setVotecount(long votecount) {
-		this.votecount = votecount;
-	}
-
-	public PartyDTO getParty() {
+	public PartyDTO getPartyDTO() {
 		return partyDTO;
 	}
 
-	public void setParty(PartyDTO partyDTO) {
+	public void setPartyDTO(PartyDTO partyDTO) {
 		this.partyDTO = partyDTO;
 	}
 
@@ -63,9 +55,22 @@ public class CandidateDTO extends UserDTO {
 		this.constituency = constituency;
 	}
 
+	public long getVotecount() {
+		return votecount;
+	}
+
+	public void setVotecount(long votecount) {
+		this.votecount = votecount;
+	}
+
 	@Override
 	public String toString() {
-		return "Candidate [party=" + partyDTO + ", age=" + age + ", constituency=" + constituency + ", votecount="
+		return "CandidateDTO [partyDTO=" + partyDTO + ", age=" + age + ", constituency=" + constituency + ", votecount="
 				+ votecount + "]";
-	}			
+	}
+
+	
+
+
+				
 }

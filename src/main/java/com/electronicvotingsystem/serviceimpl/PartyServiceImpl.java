@@ -22,65 +22,62 @@ public class PartyServiceImpl implements PartyService {
 	@Autowired
 	private ConversionClass convertParty;
 
+	// addParty
 	@Override
-	public Party addParty(PartyDTO partyDTO)
-	{
+	public Party addParty(PartyDTO partyDTO) {
 		return partyRepo.save(convertParty.convertToPartyEntity(partyDTO));
 	}
 
+	// viewParty
 	@Override
 	public PartyDTO viewParty(int partyId) throws PartyNotFoundException {
 
 		Optional<Party> party = partyRepo.findById(partyId);
 		PartyDTO dto = null;
 		Party pou = null;
-		if(party.isPresent()) {
+		if (party.isPresent()) {
 			pou = party.get();
-			dto=convertParty.convertToPartyDTO(pou);
-		}
-		else
-		{
+			dto = convertParty.convertToPartyDTO(pou);
+		} else {
 			throw new PartyNotFoundException("Party not Found");
 		}
-		return dto;	
+		return dto;
 	}
 
-	//updateParty
+	// updateParty
 	@Override
 	public Party updateParty(PartyDTO partyDTO) throws PartyNotFoundException {
 		Optional<Party> party = partyRepo.findById(partyDTO.getPartyId());
-		Party partyRecord=null;
-		if(party.isPresent()) {
-			partyRecord= party.get();
+		Party partyRecord = null;
+		if (party.isPresent()) {
+			partyRecord = party.get();
 			partyRepo.save(convertParty.convertToPartyEntity(partyDTO));
 
-		}
-		else {
+		} else {
 			throw new PartyNotFoundException("Party Not Found");
 		}
 
 		return partyRecord;
 	}
 
-	//deleteParty
+	// deleteParty
 	@Override
-	public String deleteParty(int partyId) throws PartyNotFoundException 
-	{
+	public String deleteParty(int partyId) throws PartyNotFoundException {
 		Optional<Party> Party = partyRepo.findById(partyId);
-		String message=null;
-		if(Party.isPresent()) {
+		String message = null;
+		if (Party.isPresent()) {
 			partyRepo.deleteById(partyId);
-			message="Party Deleted Successfully";
+			message = "Party Deleted Successfully";
 
-		}else {
-			message="No Party Found";
+		} else {
+			message = "No Party Found";
 			throw new PartyNotFoundException(message);
 		}
 		return message;
 
 	}
 
-	//viewAllparty
+	// viewAllparty
 	@Override
 	public List<Party> viewAllParty() {
 
@@ -88,7 +85,3 @@ public class PartyServiceImpl implements PartyService {
 
 	}
 }
-
-
-
-

@@ -13,16 +13,16 @@ public class VoterRequestDTO {
 	@NotNull
 	private String district;
 
-
-	private String applicationStatus;
+	
+	private String applicationStatus = "pending";
+	
 
 	public VoterRequestDTO() {
 		super();
 	}
 
 
-
-	public VoterRequestDTO(int requestId, @NotNull String district, String applicationStatus) {
+	public VoterRequestDTO(int requestId, @NotNull String district, @NotNull String applicationStatus) {
 		super();
 		this.requestId = requestId;
 		this.district = district;
@@ -30,10 +30,10 @@ public class VoterRequestDTO {
 	}
 
 
-
 	public int getRequestId() {
 		return requestId;
 	}
+
 
 	public void setRequestId(int requestId) {
 		this.requestId = requestId;
@@ -50,11 +50,9 @@ public class VoterRequestDTO {
 	}
 
 
-
-	public String isApplicationStatus() {
+	public String getApplicationStatus() {
 		return applicationStatus;
 	}
-
 
 
 	public void setApplicationStatus(String applicationStatus) {
@@ -62,10 +60,15 @@ public class VoterRequestDTO {
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "VoterRequest [requestId=" + requestId + ", district=" + district + 
-				", applicationStatus=" + applicationStatus + "]";
+		return "VoterRequestDTO [requestId=" + requestId + ", district=" + district + ", applicationStatus="
+				+ applicationStatus + "]";
 	}
+
+
+
+
+
+	
 }

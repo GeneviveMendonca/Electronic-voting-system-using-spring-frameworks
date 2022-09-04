@@ -13,12 +13,7 @@ public class ScheduleDTO {
 	
 	@NotNull
 	private String electionName;
-	
-	@NotNull
-	private String state;
-	
-	@NotNull
-	private String constituency;
+
 	
 	private Date electionDate;
 
@@ -26,13 +21,10 @@ public class ScheduleDTO {
 		super();
 	}
 
-	public ScheduleDTO(int scheduleId, @NotNull String electionName, @NotNull String state, @NotNull String constituency,
-			Date electionDate) {
+	public ScheduleDTO(int scheduleId, @NotNull String electionName, Date electionDate) {
 		super();
 		this.scheduleId = scheduleId;
 		this.electionName = electionName;
-		this.state = state;
-		this.constituency = constituency;
 		this.electionDate = electionDate;
 	}
 
@@ -52,22 +44,6 @@ public class ScheduleDTO {
 		this.electionName = electionName;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getConstituency() {
-		return constituency;
-	}
-
-	public void setConstituency(String constituency) {
-		this.constituency = constituency;
-	}
-
 	public Date getElectionDate() {
 		return electionDate;
 	}
@@ -78,9 +54,15 @@ public class ScheduleDTO {
 
 	@Override
 	public String toString() {
-		return "Schedule [scheduleId=" + scheduleId + ", electionName=" + electionName + ", state=" + state
-				+ ", constituency=" + constituency + ", electionDate=" + electionDate + "]";
+		return "ScheduleDTO [scheduleId=" + scheduleId + ", electionName=" + electionName + ", electionDate="
+				+ electionDate + "]";
 	}
+
+	
+
+	
+
+	
 
 
 }

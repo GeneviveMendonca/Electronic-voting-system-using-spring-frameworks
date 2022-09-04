@@ -23,11 +23,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Autowired
 	private ConversionClass convertSchedule;
 
+	
+	//addSchedule
 	@Override
 	public Schedule addSchedule(ScheduleDTO scheduleDTO) {
 		return scheduleRepo.save(convertSchedule.convertToScheduleEntity(scheduleDTO));
 	}
 
+	//viewSchedule
 	@Override
 	public ScheduleDTO viewSchedule(int scheduleId)  throws CandidateNotFoundException{
 		Optional<Schedule> schedule = scheduleRepo.findById(scheduleId);
@@ -42,12 +45,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return message;
 	}
 
+	//viewAllSchedule
 	@Override 
 	public List<Schedule> viewAllSchedule()
 	{ 
 		return scheduleRepo.findAll(); 
 	}
 
+	//updateSchedule
 	@Override
 	public Schedule updateSchedule(ScheduleDTO scheduleDTO) throws ScheduleNotFoundException {
 		Optional<Schedule> schedule = scheduleRepo.findById(scheduleDTO.getScheduleId());
@@ -64,6 +69,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRecord;
 	}
 
+	//deleteSchedule
 	@Override
 	public String deleteSchedule(int scheduleId) throws ScheduleNotFoundException 
 	{

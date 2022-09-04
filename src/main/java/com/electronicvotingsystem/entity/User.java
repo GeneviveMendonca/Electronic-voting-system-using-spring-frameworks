@@ -9,7 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="users")
@@ -34,10 +40,19 @@ public class User
 	private String mobileNo;
 
 	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm", iso = ISO.DATE_TIME)
+	@JsonFormat(pattern = "YYYY-MM-dd HH:mm")
 	private LocalDateTime dateOfBirth;
 
 	@NotNull
 	private String district;
+	
+	@NotNull
+	@Email
+	private String email;
+	
+	@NotNull
+	private String role;
 
 	@NotNull(message = "username should not be empty ")
 	private String userName;
@@ -52,7 +67,9 @@ public class User
 
 	public User(int userId, @NotNull String name, @NotNull String address, @NotNull String gender,
 			@NotNull String mobileNo, @NotNull LocalDateTime dateOfBirth, @NotNull String district,
-			@NotNull String userName, @NotNull String password) {
+			@NotNull @Email String email, @NotNull String role,
+			@NotNull(message = "username should not be empty ") String userName,
+			@NotNull(message = "password should not be empty ") String password) {
 		super();
 		this.userId = userId;
 		this.name = name;
@@ -61,6 +78,8 @@ public class User
 		this.mobileNo = mobileNo;
 		this.dateOfBirth = dateOfBirth;
 		this.district = district;
+		this.email = email;
+		this.role = role;
 		this.userName = userName;
 		this.password = password;
 	}
@@ -117,6 +136,22 @@ public class User
 		return district;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public void setDistrict(String district) {
 		this.district = district;
 	}
@@ -140,7 +175,7 @@ public class User
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", address=" + address + ", gender=" + gender
-				+ ", mobileNo=" + mobileNo + ", dateOfBirth=" + dateOfBirth + ", district=" + district + ", userName="
-				+ userName + ", password=" + password + "]";
+				+ ", mobileNo=" + mobileNo + ", dateOfBirth=" + dateOfBirth + ", district=" + district + ", email="
+				+ email + ", role=" + role + ", userName=" + userName + ", password=" + password + "]";
 	}
 }

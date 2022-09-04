@@ -8,20 +8,16 @@ import javax.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 @Component
 public class ElectionDTO {
-	
+
 	private int electionId;
 
 	@NotNull
-	private String electionName;
+	private String constituency;
 
 	@NotNull
-	private String state;
+	private List<CandidateDTO> candidates = new ArrayList<>();
 
-	@NotNull
-	private List<CandidateDTO> candidateDTOs = new ArrayList<>();
-	
-	
-	private List <ScheduleDTO> scheduleDTOs = new ArrayList<>() ;
+	private ScheduleDTO scheduleDTO;
 
 
 	public ElectionDTO() {
@@ -29,31 +25,15 @@ public class ElectionDTO {
 
 	}
 
-	public ElectionDTO(int electionId, @NotNull String electionName, @NotNull String state,
-			@NotNull List<CandidateDTO> candidateDTOs, List<ScheduleDTO> scheduleDTOs) {
+
+	public ElectionDTO(int electionId, @NotNull String constituency, @NotNull List<CandidateDTO> candidates,
+			ScheduleDTO scheduleDTO) {
 		super();
 		this.electionId = electionId;
-		this.electionName = electionName;
-		this.state = state;
-		this.candidateDTOs = candidateDTOs;
-		this.scheduleDTOs = scheduleDTOs;
+		this.constituency = constituency;
+		this.candidates = candidates;
+		this.scheduleDTO = scheduleDTO;
 	}
-
-
-
-
-	public List<ScheduleDTO> getSchedules() {
-		return scheduleDTOs;
-	}
-
-
-
-
-	public void setSchedules(List<ScheduleDTO> scheduleDTOs) {
-		this.scheduleDTOs = scheduleDTOs;
-	}
-
-
 
 
 	public int getElectionId() {
@@ -66,40 +46,52 @@ public class ElectionDTO {
 	}
 
 
-	public String getElectionName() {
-		return electionName;
+	public String getConstituency() {
+		return constituency;
 	}
 
 
-	public void setElectionName(String electionName) {
-		this.electionName = electionName;
-	}
-
-
-	public String getState() {
-		return state;
-	}
-
-
-	public void setState(String state) {
-		this.state = state;
+	public void setConstituency(String constituency) {
+		this.constituency = constituency;
 	}
 
 
 	public List<CandidateDTO> getCandidates() {
-		return candidateDTOs;
+		return candidates;
 	}
 
 
-	public void setCandidates(List<CandidateDTO> candidateDTOs) {
-		this.candidateDTOs = candidateDTOs;
+	public void setCandidates(List<CandidateDTO> candidates) {
+		this.candidates = candidates;
+	}
+
+
+	public ScheduleDTO getScheduleDTO() {
+		return scheduleDTO;
+	}
+
+
+	public void setScheduleDTO(ScheduleDTO scheduleDTO) {
+		this.scheduleDTO = scheduleDTO;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Election [electionId=" + electionId + ", electionName=" + electionName + ", state=" + state
-				+ ", candidates=" + candidateDTOs + ", schedules=" + scheduleDTOs + "]";
-	}	
+		return "ElectionDTO [electionId=" + electionId + ", constituency=" + constituency + ", candidates=" + candidates
+				+ ", scheduleDTO=" + scheduleDTO + "]";
+	}
+
+
+
+	
+
+
+
+
+
+
+
+
 
 }

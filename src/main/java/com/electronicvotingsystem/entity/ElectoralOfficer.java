@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
@@ -12,6 +11,8 @@ import javax.validation.constraints.NotNull;
 
 public class ElectoralOfficer extends User{
 
+
+	
 	@NotNull
 	private String designation;
 
@@ -19,7 +20,7 @@ public class ElectoralOfficer extends User{
 		super();
 	}
 	@OneToMany
-	@JoinColumn(name = "requestId")
+	//@JoinColumn(name = "requestId")
 	private List<VoterRequest> voterRequests = new ArrayList<>();
 
 	

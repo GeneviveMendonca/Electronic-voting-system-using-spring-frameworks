@@ -4,11 +4,12 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,47 +20,40 @@ public class Election {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int electionId;
 
-	@NotNull
-	private String electionName;
 
 	@NotNull
-	private String state;
+	private String constituency;
+	
 
-	@NotNull
-	@OneToMany(mappedBy = "election",cascade=CascadeType.ALL,fetch = FetchType.EAGER )
-	//@JoinColumn(name="Candidate.userId")
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="Candidate.userId")
 	private List<Candidate> candidates = new ArrayList<>();
 	
-	@OneToMany
-	//@JoinColumn(name="scheduleId")
-	private List <Schedule> schedules = new ArrayList<>() ;
-
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="scheduleId")
+	private Schedule schedule;
 	
+
 
 	public Election() {
 		super();
 
 	}
 
-	public Election(int electionId, @NotNull String electionName, @NotNull String state,
-			@NotNull List<Candidate> candidates, List<Schedule> schedules) {
+
+
+
+	public Election(int electionId, @NotNull String constituency, @NotNull List<Candidate> candidates,
+			Schedule schedule) {
 		super();
 		this.electionId = electionId;
-		this.electionName = electionName;
-		this.state = state;
+		this.constituency = constituency;
 		this.candidates = candidates;
-		this.schedules = schedules;
+		this.schedule = schedule;
 	}
 
 
-	public List<Schedule> getSchedules() {
-		return schedules;
-	}
-
-
-	public void setSchedules(List<Schedule> schedules) {
-		this.schedules = schedules;
-	}
 
 
 	public int getElectionId() {
@@ -67,29 +61,27 @@ public class Election {
 	}
 
 
+
+
 	public void setElectionId(int electionId) {
 		this.electionId = electionId;
 	}
 
 
-	public String getElectionName() {
-		return electionName;
+
+
+	public String getConstituency() {
+		return constituency;
 	}
 
 
-	public void setElectionName(String electionName) {
-		this.electionName = electionName;
+
+
+	public void setConstituency(String constituency) {
+		this.constituency = constituency;
 	}
 
 
-	public String getState() {
-		return state;
-	}
-
-
-	public void setState(String state) {
-		this.state = state;
-	}
 
 
 	public List<Candidate> getCandidates() {
@@ -97,15 +89,36 @@ public class Election {
 	}
 
 
+
+
 	public void setCandidates(List<Candidate> candidates) {
 		this.candidates = candidates;
 	}
 
 
+
+
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+
+
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
+	}
+
+
+
+
 	@Override
 	public String toString() {
-		return "Election [electionId=" + electionId + ", electionName=" + electionName + ", state=" + state
-				+ ", candidates=" + candidates + ", schedules=" + schedules + "]";
+		return "Election [electionId=" + electionId + ", constituency=" + constituency + ", candidates=" + candidates
+				+ ", schedule=" + schedule + "]";
 	}
+
+	
+	
 
 }

@@ -6,11 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="schedule")
@@ -23,35 +20,18 @@ public class Schedule {
 	private String electionName;
 
 	@NotNull
-	private String state;
-
-	@NotNull
-	private String constituency;
-
-	@ManyToOne
-	@JsonIgnore
-	private Election election;
-
 	private Date electionDate;
 
 	public Schedule() {
 		super();
 	}
 
-
-
-	public Schedule(int scheduleId, @NotNull String electionName, @NotNull String state, @NotNull String constituency,
-			Election election, Date electionDate) {
+	public Schedule(int scheduleId, @NotNull String electionName, Date electionDate) {
 		super();
 		this.scheduleId = scheduleId;
 		this.electionName = electionName;
-		this.state = state;
-		this.constituency = constituency;
-		this.election = election;
 		this.electionDate = electionDate;
 	}
-
-
 
 	public int getScheduleId() {
 		return scheduleId;
@@ -69,22 +49,6 @@ public class Schedule {
 		this.electionName = electionName;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getConstituency() {
-		return constituency;
-	}
-
-	public void setConstituency(String constituency) {
-		this.constituency = constituency;
-	}
-
 	public Date getElectionDate() {
 		return electionDate;
 	}
@@ -93,24 +57,14 @@ public class Schedule {
 		this.electionDate = electionDate;
 	}
 
-
-	public Election getElection() {
-		return election;
-	}
-
-
-
-	public void setElection(Election election) {
-		this.election = election;
-	}
-
-
-
 	@Override
 	public String toString() {
-		return "Schedule [scheduleId=" + scheduleId + ", electionName=" + electionName + ", state=" + state
-				+ ", constituency=" + constituency + ", election=" + election + ", electionDate=" + electionDate + "]";
+		return "Schedule [scheduleId=" + scheduleId + ", electionName=" + electionName + ", electionDate="
+				+ electionDate + "]";
 	}
+
+
+	
 
 
 

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.electronicvotingsystem.exception.AdminAlreadyExistsException;
 import com.electronicvotingsystem.exception.AdminNotFoundException;
+import com.electronicvotingsystem.exception.ApplicationStatusPendingException;
 import com.electronicvotingsystem.exception.CandidateAlreadyExistsException;
 import com.electronicvotingsystem.exception.CandidateNotFoundException;
 import com.electronicvotingsystem.exception.ElectionAlreadyExistsException;
@@ -226,5 +227,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(ex, bodyOfResponse,new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
+	
+	//ApplicationStatusPendingException
+	
+	@ExceptionHandler(value = {ApplicationStatusPendingException.class })
+
+	protected ResponseEntity<Object> ApplicationStatusPendingException( RuntimeException ex, WebRequest request) {
+
+		String bodyOfResponse = "Application Status is Pending ";
+
+		return handleExceptionInternal(ex, bodyOfResponse,new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+	
+	
+	
+	
 
 }

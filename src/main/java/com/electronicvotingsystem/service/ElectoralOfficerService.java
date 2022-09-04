@@ -2,8 +2,10 @@ package com.electronicvotingsystem.service;
 
 import java.util.List;
 
+import com.electronicvotingsystem.entity.ElectoralOfficer;
 import com.electronicvotingsystem.entity.VoterRequest;
 import com.electronicvotingsystem.exception.ElectoralOfficerAlreadyExistsException;
+import com.electronicvotingsystem.exception.ElectoralOfficerNotFoundException;
 import com.electronicvotingsystem.exception.VoterRequestNotFoundException;
 import com.electronicvotingsystem.model.ElectoralOfficerDTO;
 import com.electronicvotingsystem.model.VoterRequestDTO;
@@ -19,5 +21,19 @@ public interface ElectoralOfficerService {
 		//ViewAllVoterRequest
 		public List<VoterRequest> viewAllVoterRequest();
 		
-		public String approveVoterRequest(String result,VoterRequestDTO voterRequestDTO);
+		
+		//view ElectoralOfficer
+		public ElectoralOfficerDTO viewElectoralOfficer(int userId) throws ElectoralOfficerNotFoundException;
+		
+		
+		//updateElectoralOfficer
+		public ElectoralOfficer updateElectoralOfficer(ElectoralOfficerDTO electoralOfficerDTO) throws ElectoralOfficerNotFoundException;
+		
+		
+		//ApproveVoterRequest
+		public VoterRequest approveVoterRequest(VoterRequestDTO voterRequestDTO)throws VoterRequestNotFoundException;
+		
+		//viewAllElectoralOfficer
+		public List< ElectoralOfficer> viewAllElectoralOfficer();
 }
+

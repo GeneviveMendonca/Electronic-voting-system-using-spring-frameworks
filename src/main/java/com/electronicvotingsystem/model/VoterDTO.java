@@ -1,9 +1,5 @@
 package com.electronicvotingsystem.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -16,26 +12,27 @@ public class VoterDTO  extends UserDTO{
 	private int age;
 
 	@NotNull
-	@Email
-	private String emailId;
+	private String constituency;
 
+	private VoterRequestDTO voterRequestDTO;
 	
-	private List <VoterRequestDTO> voterRequestDTO = new ArrayList<>() ;
-
-	private List<ElectionDTO> electionDTOs = new ArrayList<>();
+	private boolean hasVoted;
 
 	public VoterDTO() {
 		super();
 	}
 
-	public VoterDTO(@Min(18) int age, @NotNull @Email String emailId, List<VoterRequestDTO> voterRequestDTO,
-			List<ElectionDTO> electionDTOs) {
+
+
+	public VoterDTO(@Min(18) int age, @NotNull String constituency, VoterRequestDTO voterRequestDTO, boolean hasVoted) {
 		super();
 		this.age = age;
-		this.emailId = emailId;
+		this.constituency = constituency;
 		this.voterRequestDTO = voterRequestDTO;
-		this.electionDTOs = electionDTOs;
+		this.hasVoted = hasVoted;
 	}
+
+
 
 	public int getAge() {
 		return age;
@@ -45,34 +42,40 @@ public class VoterDTO  extends UserDTO{
 		this.age = age;
 	}
 
-	public String getEmailId() {
-		return emailId;
+	public String getConstituency() {
+		return constituency;
 	}
 
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+	public void setConstituency(String constituency) {
+		this.constituency = constituency;
 	}
 
-	public List<VoterRequestDTO> getVoterRequest() {
+	public VoterRequestDTO getVoterRequestDTO() {
 		return voterRequestDTO;
 	}
 
-	public void setVoterRequest(List<VoterRequestDTO> voterRequestDTO) {
+	public void setVoterRequestDTO(VoterRequestDTO voterRequestDTO) {
 		this.voterRequestDTO = voterRequestDTO;
 	}
 
-	public List<ElectionDTO> getElections() {
-		return electionDTOs;
+
+
+	public boolean isHasVoted() {
+		return hasVoted;
 	}
 
-	public void setElections(List<ElectionDTO> electionDTOs) {
-		this.electionDTOs = electionDTOs;
+
+
+	public void setHasVoted(boolean hasVoted) {
+		this.hasVoted = hasVoted;
 	}
+
+
 
 	@Override
 	public String toString() {
-		return "Voter [age=" + age + ", emailId=" + emailId + ", voterRequest=" + voterRequestDTO + ", elections="
-				+ electionDTOs + "]";
+		return "VoterDTO [age=" + age + ", constituency=" + constituency + ", voterRequestDTO=" + voterRequestDTO
+				+ ", hasVoted=" + hasVoted + "]";
 	}
 
 

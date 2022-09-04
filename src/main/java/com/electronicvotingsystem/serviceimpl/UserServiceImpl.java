@@ -1,5 +1,7 @@
 package com.electronicvotingsystem.serviceimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,21 +12,38 @@ import com.electronicvotingsystem.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	private UserRepository userRepo;
 
-	
-	//validate Users
+	// validate Users
 	@Override
-	public User loginUser(String userName, String password)  {
-		
+	public User findByUserNameAndPassword(String userName, String password) {
+
 		User User = userRepo.findByUserNameAndPassword(userName, password);
-		if(User==null)
-		{
+		if (User == null) {
 			throw new UserNotFoundException("Invalid User");
 		}
 		return User;
 	}
-		
+
+	// findByUserName
+	@Override
+	public User findByUserName(String userName) {
+		return userRepo.findByUserName(userName);
+	}
+
+	// save
+	@Override
+	public User save(User user) {
+		return userRepo.save(user);
+	}
+
+	// viewAllUser
+	@Override
+	public List<User> viewAllUser() {
+		return userRepo.findAll();
+
+	}
+
 }

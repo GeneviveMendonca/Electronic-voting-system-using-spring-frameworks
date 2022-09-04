@@ -3,25 +3,19 @@ package com.electronicvotingsystem.entity;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Candidate extends User {
 
-	@NotNull
-	@OneToOne
+	
+	@ManyToOne
 	@JoinColumn(name="partyId")
 	private Party party;
 
+	@NotNull
 	private int age;
 	
-	@ManyToOne
-	@JsonIgnore
-	private Election election;
-
 	@NotNull
 	private String constituency;
 
@@ -31,24 +25,11 @@ public class Candidate extends User {
 		super();
 	}
 
-	
-
-	public Candidate(@NotNull Party party, int age, Election election, @NotNull String constituency, long votecount) {
+	public Candidate(Party party, int age, @NotNull String constituency, long votecount) {
 		super();
 		this.party = party;
 		this.age = age;
-		this.election = election;
 		this.constituency = constituency;
-		this.votecount = votecount;
-	}
-
-
-
-	public long getVotecount() {
-		return votecount;
-	}
-
-	public void setVotecount(long votecount) {
 		this.votecount = votecount;
 	}
 
@@ -75,26 +56,28 @@ public class Candidate extends User {
 	public void setConstituency(String constituency) {
 		this.constituency = constituency;
 	}
-	
 
-	public Election getElection() {
-		return election;
+	public long getVotecount() {
+		return votecount;
 	}
 
-
-
-	public void setElection(Election election) {
-		this.election = election;
+	public void setVotecount(long votecount) {
+		this.votecount = votecount;
 	}
-
-
 
 	@Override
 	public String toString() {
-		return "Candidate [party=" + party + ", age=" + age + ", election=" + election + ", constituency="
-				+ constituency + ", votecount=" + votecount + "]";
+		return "Candidate [party=" + party + ", age=" + age + ", constituency=" + constituency + ", votecount="
+				+ votecount + "]";
 	}
 
+	
+
+	
+
+
+
+	
 
 
 				

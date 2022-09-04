@@ -19,7 +19,6 @@ public interface VoterRequestService {
 	public List<VoterRequest> viewAllVoterRequest();
 	
 	//ApproveVoterRequest
-	
 	public VoterRequest approveVoterRequest(VoterRequestDTO voterRequestDTO)throws VoterRequestNotFoundException;
 	
 }

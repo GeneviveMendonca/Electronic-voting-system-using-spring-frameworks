@@ -1,44 +1,38 @@
 package com.electronicvotingsystem.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.Email;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Voter  extends User{
+public class Voter extends User {
 
 	@Min(18)
 	private int age;
 
 	@NotNull
-	@Email
-	private String emailId;
+	private String constituency;
 
-	@OneToMany
-	@JoinColumn(name="requestId")
-	private List <VoterRequest> voterRequest = new ArrayList<>() ;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "requestId")
+	private VoterRequest voterRequest = new VoterRequest();
 
-	@OneToMany
-	@JoinColumn(name="electionId",insertable= false , updatable=false, nullable = false)
-	private List<Election> elections = new ArrayList<>();
+	private boolean hasVoted;
 
 	public Voter() {
 		super();
+		
 	}
 
-	public Voter(@Min(18) int age, @NotNull @Email String emailId, List<VoterRequest> voterRequest,
-			List<Election> elections) {
+	public Voter(@Min(18) int age, @NotNull String constituency, VoterRequest voterRequest, boolean hasVoted) {
 		super();
 		this.age = age;
-		this.emailId = emailId;
+		this.constituency = constituency;
 		this.voterRequest = voterRequest;
-		this.elections = elections;
+		this.hasVoted = hasVoted;
 	}
 
 	public int getAge() {
@@ -49,35 +43,34 @@ public class Voter  extends User{
 		this.age = age;
 	}
 
-	public String getEmailId() {
-		return emailId;
+	public String getConstituency() {
+		return constituency;
 	}
 
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+	public void setConstituency(String constituency) {
+		this.constituency = constituency;
 	}
 
-	public List<VoterRequest> getVoterRequest() {
+	public VoterRequest getVoterRequest() {
 		return voterRequest;
 	}
 
-	public void setVoterRequest(List<VoterRequest> voterRequest) {
+	public void setVoterRequest(VoterRequest voterRequest) {
 		this.voterRequest = voterRequest;
 	}
 
-	public List<Election> getElections() {
-		return elections;
+	public boolean isHasVoted() {
+		return hasVoted;
 	}
 
-	public void setElections(List<Election> elections) {
-		this.elections = elections;
+	public void setHasVoted(boolean hasVoted) {
+		this.hasVoted = hasVoted;
 	}
 
 	@Override
 	public String toString() {
-		return "Voter [age=" + age + ", emailId=" + emailId + ", voterRequest=" + voterRequest + ", elections="
-				+ elections + "]";
+		return "Voter [age=" + age + ", constituency=" + constituency + ", voterRequest=" + voterRequest + ", hasVoted="
+				+ hasVoted + "]";
 	}
-
 
 }

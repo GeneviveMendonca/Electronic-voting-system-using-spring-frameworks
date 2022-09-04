@@ -17,6 +17,7 @@ import com.electronicvotingsystem.entity.Candidate;
 import com.electronicvotingsystem.entity.Election;
 import com.electronicvotingsystem.entity.Party;
 import com.electronicvotingsystem.entity.VoterRequest;
+import com.electronicvotingsystem.exception.AdminNotFoundException;
 import com.electronicvotingsystem.exception.CandidateNotFoundException;
 import com.electronicvotingsystem.exception.ElectionNotFoundException;
 import com.electronicvotingsystem.exception.PartyNotFoundException;
@@ -47,59 +48,61 @@ public class AdminServicesImpl implements AdminServices {
 
 	@Autowired
 	private PartyRepository partyRepo;
-	
+
 	@Autowired
 	private ConversionClass convertParty;
 
 	@Autowired
 	private CandidateRepository candRepo;
-	
+
 	@Autowired
 	private ConversionClass convertCandidate;
 
 	@Autowired
 	private VoterRequestRepository voterRequestRepo;
-	
+
 	@Autowired
 	private ConversionClass convertvoterRequestRepo;
-	
+
 	@Autowired
 	private UserRepository userRepo;
 
-
+	// registerAdmin
 	@Override
 	public String registerAdmin(AdminDTO adminDTO) {
-		String message=null;
-		Admin admin=null;
-		 if(this.userRepo.existsByUserName(adminDTO.getUserName())) {
-		        throw new UserAlreadyExistsException("User with given userName already exist");
-		 }
-		 admin=adminRepo.save(convertAdminRepo.convertToAdminEntity(adminDTO));
-		 if(admin!=null) {
-		 message="register Successfull";
-		 }
-		 return message;
+		String message = null;
+		Admin admin = null;
+		if (this.userRepo.existsByUserName(adminDTO.getUserName())) {
+			throw new UserAlreadyExistsException("User with given userName already exist");
+		}
+		admin = adminRepo.save(convertAdminRepo.convertToAdminEntity(adminDTO));
+		if (admin != null) {
+			message = "register Successfull";
+		}
+		return message;
 	}
 
+	// addElection
 	@Override
-	public Election addElection(ElectionDTO electionDto)
-	{
+	public Election addElection(ElectionDTO electionDto) {
 		return electionRepo.save(convertElection.convertToElectionEntity(electionDto));
-		
+
 	}
 
+	// viewAllElection
 	@Override
 	public List<Election> viewAllElection() {
 
 		return electionRepo.findAll();
 	}
 
+	// addParty
 	@Override
-	public Party addParty(PartyDTO partyDTO)
-	{
+	public Party addParty(PartyDTO partyDTO) {
 		return partyRepo.save(convertParty.convertToPartyEntity(partyDTO));
 	}
 
+	// viewAllParty
 	@Override
 	public List<Party> viewAllParty() {
 
@@ -107,64 +110,75 @@ public class AdminServicesImpl implements AdminServices {
 
 	}
 
+	// viewElection
 	@Override
 	public ElectionDTO viewElection(int electionId) throws ElectionNotFoundException {
 
 		Optional<Election> election = electionRepo.findById(electionId);
 		ElectionDTO elecDto = null;
 		Election elec = null;
-		if(election.isPresent()) {
+		if (election.isPresent()) {
 			elec = election.get();
-			elecDto=convertElection.convertToElectionDTO(elec);
-		}
-		else
-		{
+			elecDto = convertElection.convertToElectionDTO(elec);
+		} else {
 			throw new ElectionNotFoundException("Election not Found");
 		}
-		return elecDto;	
+		return elecDto;
 	}
 
+	// viewParty
 	@Override
 	public PartyDTO viewParty(String partyName) throws PartyNotFoundException {
 
 		Optional<Party> party = partyRepo.findById(Integer.parseInt(partyName));
 		PartyDTO partyDto = null;
 		Party part = null;
-		if(party.isPresent()) {
+		if (party.isPresent()) {
 			part = party.get();
-			partyDto=convertParty.convertToPartyDTO(part);
-		}
-		else
-		{
+			partyDto = convertParty.convertToPartyDTO(part);
+		} else {
 			throw new PartyNotFoundException("Party not Found");
 		}
-		return partyDto;	
+		return partyDto;
 	}
 
+	// addCandidate
 	@Override
 	public Candidate addCandidate(CandidateDTO candidateDTO) {
 		return candRepo.save(convertCandidate.convertToCandidateEntity(candidateDTO));
 	}
 
+//	@Override
+//	public CandidateDTO viewCandidate(String userName)  throws CandidateNotFoundException{
+//		Optional<Candidate> candidate = candRepo.findById(Integer.parseInt(userName));
+//		CandidateDTO dto = null;
+//		Candidate cand = null;
+//		if(candidate.isPresent()) {
+//			cand = candidate.get();
+//			dto = convertCandidate.convertToCandidateDTO(cand);
+//		}else {
+//			throw new CandidateNotFoundException("No such candidate");
+//		}
+//		return dto;
+//	}
+	// viewCandidate
 	@Override
-	public CandidateDTO viewCandidate(String userName)  throws CandidateNotFoundException{
-		Optional<Candidate> candidate = candRepo.findById(Integer.parseInt(userName));
+	public CandidateDTO viewCandidate(int userId) throws CandidateNotFoundException {
+		Optional<Candidate> candidate = candRepo.findById(userId);
 		CandidateDTO dto = null;
 		Candidate cand = null;
-		if(candidate.isPresent()) {
+		if (candidate.isPresent()) {
 			cand = candidate.get();
 			dto = convertCandidate.convertToCandidateDTO(cand);
-		}else {
+		} else {
 			throw new CandidateNotFoundException("No such candidate");
 		}
 		return dto;
 	}
 
-
-	@Override 
-	public List<Candidate> viewAllCandidates()
-	{ 
-		return candRepo.findAll(); 
+	@Override
+	public List<Candidate> viewAllCandidates() {
+		return candRepo.findAll();
 	}
 
 	@Override
@@ -174,6 +188,7 @@ public class AdminServicesImpl implements AdminServices {
 
 	}
 
+	// viewVoterRequest
 	@Override
 	public VoterRequestDTO viewVoterRequest(int requestId) throws VoterRequestNotFoundException {
 		Optional<VoterRequest> voterRequest = voterRequestRepo.findById(requestId);
@@ -188,6 +203,37 @@ public class AdminServicesImpl implements AdminServices {
 			throw new VoterRequestNotFoundException("no such requests");
 		}
 		return dto;
-	}	
+	}
+
+	// updateAdmin
+	@Override
+	public Admin updateAdmin(AdminDTO adminDTO) throws AdminNotFoundException {
+		Optional<Admin> admin = adminRepo.findById(adminDTO.getUserId());
+		Admin adminRecord = null;
+		if (admin.isPresent()) {
+			adminRecord = admin.get();
+			adminRepo.save(convertAdminRepo.convertToAdminEntity(adminDTO));
+
+		} else {
+			throw new AdminNotFoundException("User Not Found");
+		}
+
+		return adminRecord;
+	}
+
+	// viewAdmin
+	@Override
+	public AdminDTO viewAdmin(int userId) throws AdminNotFoundException {
+		Optional<Admin> admin = adminRepo.findById(userId);
+		AdminDTO dto = null;
+		Admin adm = null;
+		if (admin.isPresent()) {
+			adm = admin.get();
+			dto = convertAdminRepo.convertToAdminDTO(adm);
+		} else {
+			throw new AdminNotFoundException("No such User");
+		}
+		return dto;
+	}
 
 }

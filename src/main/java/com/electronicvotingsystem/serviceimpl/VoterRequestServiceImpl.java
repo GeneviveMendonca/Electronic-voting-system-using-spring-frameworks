@@ -22,12 +22,14 @@ public class VoterRequestServiceImpl implements VoterRequestService {
 	@Autowired
 	private ConversionClass convertVoterRequest;
 
+	// addVoterRequest
 	@Override
 	public VoterRequest addVoterRequest(VoterRequestDTO voterRequestDTO) {
 
 		return voterRequestRepo.save(convertVoterRequest.convertToVoterRequestEntity(voterRequestDTO));
 	}
 
+	// viewVoterRequest
 	@Override
 	public VoterRequestDTO viewVoterRequest(int requestId) throws VoterRequestNotFoundException {
 		Optional<VoterRequest> voterRequest = voterRequestRepo.findById(requestId);
@@ -44,21 +46,23 @@ public class VoterRequestServiceImpl implements VoterRequestService {
 		return dto;
 	}
 
+	// viewAllVoterRequest
 	@Override
 	public List<VoterRequest> viewAllVoterRequest() {
 
 		return voterRequestRepo.findAll();
 
 	}
-	
+
 //	@Override
 //	public String approveVoterRequest(String result,VoterRequestDTO voterRequestDTO)  {
 //	if(result.equalsIgnoreCase("APPROVE")==true) 
 //	voterRequestRepo.save(convertVoterRequest.convertToVoterRequestEntity(voterRequestDTO));
 //	return result;
 //}
-	
-	public VoterRequest approveVoterRequest(VoterRequestDTO voterRequestDTO)throws VoterRequestNotFoundException {
+
+	// approveVoterRequest
+	public VoterRequest approveVoterRequest(VoterRequestDTO voterRequestDTO) throws VoterRequestNotFoundException {
 		Optional<VoterRequest> voterRequest = voterRequestRepo.findById(voterRequestDTO.getRequestId());
 		VoterRequest voter = null;
 		if (voterRequest.isPresent()) {
@@ -71,6 +75,5 @@ public class VoterRequestServiceImpl implements VoterRequestService {
 
 		return voter;
 	}
-	
+
 }
-	
